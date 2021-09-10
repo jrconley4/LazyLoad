@@ -1,0 +1,20 @@
+<div class="container">
+    <h1>Flags</h1>
+      <!--ng-template #flags-->
+        <!--todo select class="custom-select" [formControl]="sortControl">
+          <option>Sort By</option>
+          <option value="name">Name</option>
+          <option value="status">Status</option>
+        </select-->
+  
+        <section class="flex">
+          <div class="card" *ngFor="let flag of flags$ | async">
+            <div class="card-body">
+              <h5 class="card-title">
+                {{flag.flagId}}-{{flag.name}}
+                <span class="badge badge-info" style="cursor: pointer;" (click)="onToggle(flag.flagId); flag.bitValue = !flag.bitValue;">{{flag.bitValue}}</span>
+              </h5>
+            </div>
+          </div>
+        </section>
+    </div>
