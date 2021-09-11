@@ -12,27 +12,34 @@ import {
 import {
   Observable
 } from 'rxjs';
-import { FeatureFlagsService } from '../core/services/feature-flags.service';
+import { FeatureFlagsService } from '../services/feature-flags.service';
 
 //see
 //https://stackoverflow.com/questions/38425461/angular2-canactivate-calling-async-function
 
-@Injectable()
-export class AuthGuardService implements CanActivate, CanActivateChild {
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(private flagService: FeatureFlagsService, private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot, state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.checkFeatureFlag();
+
+    const { data } = route;
+    const pathFlagName = data?.pathFlagName;
+    console.log('pathFlagName data: "' + pathFlagName);
+
+    return this.checkFeatureFlag(pathFlagName);
   }
 
-  async checkFeatureFlag(): Promise<boolean> {
+  async checkFeatureFlag(pathFlagName :string): Promise<boolean> {
     // Implement your authentication in authService
-    const isFlagOn = await this.flagService.isFeatureFlagEnabled("FlagA");
+    const isFlagOn = await this.flagService.isFeatureFlagEnabled(pathFlagName);
 
     if (!isFlagOn)
-      alert('Sorry! Not today.');
+      alert("Can't go there! FlagA is off.");
 
     return isFlagOn;
   }

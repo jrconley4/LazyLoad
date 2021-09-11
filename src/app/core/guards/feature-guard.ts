@@ -10,7 +10,8 @@ export class FeatureGuard implements CanLoad {
   constructor(
     private featureFlagsService: FeatureFlagsService,
     private router: Router
-  ) { }
+  ) {}
+    
   canLoad(
     route: Route,
     segments: UrlSegment[]
@@ -19,15 +20,24 @@ export class FeatureGuard implements CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const {
+
+    /*const {
       data: { feature },
-    } = route;
-    if (feature) {
-      const isEnabled = this.featureFlagsService.isFeatureFlagEnabled(feature);
+    } = route; */
+
+    const { data } = route;
+    const moduleFlagName = data?.moduleFlagName;
+    console.log('moduleFlagName data: "' + moduleFlagName);
+
+    if (moduleFlagName) {
+      const isEnabled = this.featureFlagsService.isFeatureFlagEnabled(moduleFlagName);
+      console.log('isEnabled: "' + isEnabled);
+      
       if (isEnabled) {
         return true;
       }
     }
+
     this.router.navigate(['/']);
     return false;
   }
