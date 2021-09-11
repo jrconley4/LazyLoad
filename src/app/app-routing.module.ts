@@ -23,8 +23,8 @@ const routes: Routes =
   canLoad: [FeatureGuard],
   canActivate: [ AuthGuard ],
   data: {
-    moduleFlagName: "FlagA",
-    pathFlagName: "FlagA"
+    moduleFlagName: "FlagB",
+    pathFlagName: "FlagB"
   } }
   ];
 

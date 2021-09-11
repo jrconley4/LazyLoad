@@ -31,7 +31,8 @@ export class FeatureFlagsService {
 
   //good
   setFlag(flagId: number, bitValue: boolean) {
-    this.http.post<any>(this.flagsUrl + 'SetFlag', { flagId: flagId, bitValue: bitValue }).subscribe(data => {
+    this.http.post<any>(this.flagsUrl + 'SetFlag', { flagId: flagId, newValue: bitValue }).subscribe(data => {
+      this.loadInitialData();
       //this.postId = data.id;
     });
   }

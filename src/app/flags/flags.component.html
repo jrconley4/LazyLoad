@@ -12,7 +12,7 @@
             <div class="card-body">
               <h5 class="card-title">
                 {{flag.flagId}}-{{flag.name}}
-                <span class="badge badge-info" style="cursor: pointer;" (click)="onToggle(flag.flagId); flag.bitValue = !flag.bitValue;">{{flag.bitValue}}</span>
+                <span class="badge badge-info" style="cursor: pointer;" (click)="onToggle(flag.flagId, !flag.bitValue);">{{flag.bitValue}}</span>
               </h5>
             </div>
           </div>

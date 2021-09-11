@@ -19,7 +19,7 @@ export class FlagsComponent implements OnInit {
     this.flags$ = this.flagsService.flags$;
   }
 
-  onToggle(flagId: number): void {
-    //this.flagsService.setFlag();
+  onToggle(flagId: number, bitValue: boolean): void {
+    this.flagsService.setFlag(flagId, bitValue);
   }
 }
