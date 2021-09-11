@@ -6,5 +6,18 @@
 <button routerLink="/customers">Customers</button>
 <button routerLink="/orders">Orders</button>
 <button routerLink="">Home</button>
+<br>
+the follow links are the same as the buttons above, but they only display if a feature flag is set
+<nav>
+  <ng-container *featureFlag="'FlagA'">
+    <a routerLink="/Flags">Flags</a>
+  </ng-container>
+  <ng-container *featureFlag="'FlagA'">
+    <a routerLink="/customers">customers</a>
+  </ng-container>
+  <ng-container *featureFlag="'FlagB'">
+    <a routerLink="/orders">orders</a>
+  </ng-container>
+</nav>
 
 <router-outlet></router-outlet>

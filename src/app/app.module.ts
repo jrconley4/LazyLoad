@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppInitService } from './core/services/app-init.service';
 
+import { FeatureFlagsService } from "./core/services/feature-flags.service";
+import { FeatureFlagDirectiveModule } from "./core/directives/feature-directive.module";
+
 export function initializeApp1(appInitService: AppInitService) {
   return (): Promise<any> => {
     return appInitService.Init();
   }
 }
-
 
 //const appInitFactoryFactory = (appInitService: AppInitService) => () =>
 //  appInitService.Init();
@@ -23,7 +25,8 @@ export function initializeApp1(appInitService: AppInitService) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FeatureFlagDirectiveModule,
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp1, deps: [AppInitService], multi: true }
