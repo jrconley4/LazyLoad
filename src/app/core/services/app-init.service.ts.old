@@ -14,13 +14,6 @@ export class AppInitService {
       console.log("AppInitService.init() called");
       ////do your initialisation stuff here
 
-      /*
-        export function preloadUser(userService: UserService) {
-          return function () {
-            return userService.getUser().toPromise();
-          };
-        }
-      */
 
       this.flagsService.loadInitialData();
       console.log('AppInitService Finished');

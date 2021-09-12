@@ -4,19 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AppInitService } from './core/services/app-init.service';
-
-import { FeatureFlagsService } from "./core/services/feature-flags.service";
+import { FeatureFlagsService } from './core/services/feature-flags.service';
 import { FeatureFlagDirectiveModule } from "./core/directives/feature-directive.module";
+//import { AppInitService } from './core/services/app-init.service';
 
-export function initializeApp1(appInitService: AppInitService) {
-  return (): Promise<any> => {
-    return appInitService.Init();
-  }
+export function initializeApp1(featureFlagsService: FeatureFlagsService) {
+  return () => featureFlagsService.loadInitialData().toPromise();
 }
-
-//const appInitFactoryFactory = (appInitService: AppInitService) => () =>
-//  appInitService.Init();
 
 @NgModule({
   declarations: [
@@ -26,10 +20,10 @@ export function initializeApp1(appInitService: AppInitService) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FeatureFlagDirectiveModule,
+    FeatureFlagDirectiveModule
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: initializeApp1, deps: [AppInitService], multi: true }
+    { provide: APP_INITIALIZER, useFactory: initializeApp1, deps: [FeatureFlagsService], multi: true }
   ],
   bootstrap: [AppComponent]
 })

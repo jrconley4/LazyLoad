@@ -12,6 +12,7 @@ import { FeatureFlagsService } from "../services/feature-flags.service";
 })
 export class FeatureFlagDirective implements OnInit {
   @Input() featureFlag!: string;
+  
   constructor(
     private tpl: TemplateRef<any>,
     private vcr: ViewContainerRef,

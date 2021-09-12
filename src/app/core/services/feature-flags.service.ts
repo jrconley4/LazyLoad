@@ -25,14 +25,14 @@ export class FeatureFlagsService {
   //todo: add readonly in front of flag$ and use loadFlags logic to populate _flagsSource
   readonly flags$ = this._flagsSource.asObservable();
   private flagsUrl = 'https://localhost:5001/api/FeatureFlags/';
+  //config: Observable<Flag[]>;
 
   //good
   constructor(private http: HttpClient) { }
 
   //good
   setFlag(flagId: number, bitValue: boolean) {
-    this.http.post<any>(this.flagsUrl + 'SetFlag', { flagId: flagId, newValue: bitValue }).subscribe(data => {
-      this.loadInitialData();
+    this.http.post<any>(this.flagsUrl + 'SetFlag', { flagId: flagId, bitValue: bitValue }).subscribe(data => {
       //this.postId = data.id;
     });
   }
@@ -80,7 +80,7 @@ export class FeatureFlagsService {
     return isOn;
   }
 
-  loadInitialData() {
+  loadInitialData2() {
     this.getAllFlags()
       .subscribe(
         res => {
@@ -91,6 +91,21 @@ export class FeatureFlagsService {
         },
         err => console.log("Error retrieving Flags")
       );
+  }
+
+  // note: instead of any you should put your config type
+  public loadInitialData(): Observable<any>  {
+    return this.http.get<Flag[]>(this.flagsUrl).pipe(
+      map(res => {
+        let flags = (<Object[]>res).map((flag: any) =>
+          new Flag({ flagId: flag.flagId, name: flag.name, bitValue: flag.bitValue }));
+
+        this._flagsSource.next(List(flags));
+      },
+      //tap(configData => (this.config = configData)),
+      () => console.log("Error retrieving Flags")
+      )
+    );
   }
 
   //add this?

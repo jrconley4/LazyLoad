@@ -1,5 +1,6 @@
 import {
-  Injectable
+  Injectable,
+  Input
 } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -21,6 +22,8 @@ import { FeatureFlagsService } from '../services/feature-flags.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
+  @Input() featureFlag!: string;
+
   constructor(private flagService: FeatureFlagsService, private router: Router) { }
 
   canActivate(
